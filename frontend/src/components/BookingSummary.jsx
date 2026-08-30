@@ -1,0 +1,4 @@
+import { ShieldCheck } from 'lucide-react'
+import { formatPrice } from '../data/offers'
+function BookingSummary({ selectedOffer, quantity }) { const total = selectedOffer.price * Number(quantity || 1); return <aside className="booking-summary"><p className="eyebrow">YOUR SELECTION</p><h2>Booking Summary</h2><div className="summary-row"><span>Package</span><strong>{selectedOffer.name}</strong></div><div className="summary-row"><span>Rental days</span><strong>{selectedOffer.days} {selectedOffer.days === 1 ? 'day' : 'days'}</strong></div><div className="summary-row"><span>PS5 quantity</span><strong>{quantity || 1}</strong></div><div className="summary-total"><span>Estimated total</span><strong>{formatPrice(total)}</strong><small>Final price confirmed after availability check.</small></div><p className="secure-note"><ShieldCheck size={17} /> Your personal details stay protected.</p></aside> }
+export default BookingSummary

@@ -1,0 +1,5 @@
+import { ArrowRight, Gamepad2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { rentalConfig, formatPrice } from '../data/offers'
+function Hero() { return <section className="hero-section"><div className="hero-background" /><div className="hero-grid" /><div className="container hero-content"><p className="eyebrow"><span className="status-dot" /> Available for delivery</p><h1>PS5 <span>RENTAL</span></h1><p className="hero-tagline">Play More. <em>Pay Less.</em></p><p className="hero-copy">Premium PS5 gaming delivered to your doorstep. Your next unforgettable gaming session is just a few taps away.</p><div className="hero-actions"><Link to="/book" className="button button-primary">Book Now <ArrowRight size={18} /></Link><Link to="/offers" className="button button-secondary">View Offers</Link></div><div className="starting-price"><Gamepad2 size={18} /><span>Starting from <strong>{formatPrice(rentalConfig.dailyRate)}/day</strong></span></div></div><div className="scroll-label">SCROLL TO EXPLORE <span /></div></section> }
+export default Hero
