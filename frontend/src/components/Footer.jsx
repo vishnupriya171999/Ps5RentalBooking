@@ -1,4 +1,15 @@
-import { Camera, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
-function Footer() { return <footer className="site-footer"><div className="container footer-content"><Link to="/" className="brand"><span className="brand-mark"><Zap size={17} fill="currentColor" /></span>PLAY<span>LOOP</span></Link><p>Premium gaming, delivered.</p><a href="https://instagram.com" aria-label="Instagram"><Camera size={19} /></a></div><div className="container footer-bottom">© {new Date().getFullYear()} PlayLoop Rentals. All rights reserved.</div></footer> }
+import brandLogo from '../assets/ps5-rental-chennai-logo-simple.svg'
+import footerStory from '../assets/footer-game-story.png'
+
+function Footer() {
+  const goHome = (event) => {
+    if (window.location.pathname !== '/') return
+    event.preventDefault()
+    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return <footer className="site-footer"><div className="container footer-content"><Link to="/#home" className="brand" aria-label="Go to home page" onClick={goHome}><img className="brand-mark" src={brandLogo} alt="" />PS5<span>RentalChennai</span></Link><div className="footer-slogan"><span>RENT · PLAY · REPEAT</span><strong>Premium gaming, delivered.</strong></div><img className="footer-story" src={footerStory} alt="A friendly game robot playing alongside a customer" /></div><div className="container footer-bottom">© {new Date().getFullYear()} PS5RentalChennai. All rights reserved.</div></footer>
+}
+
 export default Footer
