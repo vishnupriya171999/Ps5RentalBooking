@@ -1,0 +1,58 @@
+.brand {
+  position: relative;
+  isolation: isolate;
+  min-height: 0;
+  padding: 0;
+  color: #f6fbff;
+  font-family: 'Outfit', Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.45px;
+  text-shadow: 0 1px 14px rgba(131, 207, 255, 0.2);
+}
+
+.brand::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 28px;
+  right: 0;
+  bottom: -5px;
+  height: 2px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(78, 190, 255, 0.8), rgba(112, 218, 255, 0.18) 72%, transparent);
+  box-shadow: 0 0 13px rgba(72, 181, 255, 0.4);
+}
+
+.brand > span:last-child {
+  margin-left: 1px;
+  background: linear-gradient(100deg, #8ad2ff, #319af1 62%, #a5deff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-content > .brand:hover,
+.site-header .brand:hover {
+  color: #f6fbff;
+  transform: none;
+  filter: none;
+}
+
+.brand .brand-mark {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  filter: drop-shadow(0 4px 10px rgba(58, 170, 255, 0.34));
+}
+
+.footer-content > .brand:hover > span:last-child,
+.site-header .brand:hover > span:last-child {
+  color: inherit;
+}
+
+@media (max-width: 700px) {
+  .brand { font-size: 14px; }
+  .brand .brand-mark { width: 30px; height: 30px; margin-right: 6px; }
+  .brand::before { left: 24px; bottom: -4px; }
+}

@@ -1,0 +1,59 @@
+.extra-controller-addon {
+  grid-template-columns: 36px minmax(0, 1fr) auto auto;
+  border-color: rgba(95, 187, 255, 0.32);
+  background: linear-gradient(100deg, rgba(16, 49, 84, 0.88), rgba(10, 24, 42, 0.94));
+  cursor: pointer;
+}
+
+.extra-controller-addon:focus-visible {
+  outline: 2px solid #75caff;
+  outline-offset: 3px;
+}
+
+.extra-controller-addon.unavailable {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: saturate(0.55);
+}
+
+.addon-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 5px;
+  border: 1px solid rgba(113, 200, 255, 0.4);
+  border-radius: 9px;
+  background: rgba(7, 23, 42, 0.88);
+  box-shadow: inset 0 1px 0 rgba(164, 222, 255, 0.08);
+}
+
+.addon-stepper button {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: #d8efff;
+  border: 0;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #218cf1, #176bc1);
+  box-shadow: 0 3px 8px rgba(11, 92, 182, 0.3);
+  cursor: pointer;
+}
+
+.addon-stepper button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.addon-stepper strong {
+  min-width: 16px;
+  color: #dff3ff;
+  text-align: center;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .extra-controller-addon { grid-template-columns: 34px minmax(0, 1fr); }
+  .extra-controller-addon .booking-addon-price { justify-self: start; padding-left: 45px; }
+  .extra-controller-addon .addon-stepper { justify-self: end; }
+}

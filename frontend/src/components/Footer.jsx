@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import brandLogo from '../assets/ps5-rental-chennai-logo-simple.svg'
 import footerStory from '../assets/footer-game-story.png'
+import '../footer-mobile.css'
 
 function Footer() {
   const goHome = (event) => {

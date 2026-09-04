@@ -1,0 +1,49 @@
+@media (max-width: 700px) {
+  .site-footer .footer-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    grid-template-areas:
+      'brand story'
+      'slogan slogan';
+    align-items: center;
+    gap: 14px 10px;
+    min-height: 0;
+    height: auto;
+    padding: 22px 0 18px;
+  }
+
+  .site-footer .footer-content > .brand {
+    grid-area: brand;
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  .site-footer .footer-story {
+    grid-area: story;
+    width: 112px;
+    height: 68px;
+    margin: 0;
+    justify-self: end;
+    object-position: center;
+  }
+
+  .site-footer .footer-slogan {
+    grid-area: slogan;
+    display: grid;
+    justify-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 10px 8px 1px;
+    text-align: center;
+  }
+
+  .site-footer .footer-slogan::before { inset: -11px 5%; }
+  .site-footer .footer-slogan strong { font-size: 14px; }
+}
+
+@media (max-width: 380px) {
+  .site-footer .footer-content { grid-template-columns: minmax(0, 1fr) 94px; }
+  .site-footer .footer-story { width: 94px; height: 59px; }
+  .site-footer .footer-content > .brand { font-size: 13px; }
+  .site-footer .footer-slogan strong { font-size: 13px; }
+}

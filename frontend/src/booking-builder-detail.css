@@ -1,0 +1,49 @@
+/* Detailed package builder: keeps the booking choices easy to compare. */
+.rental-date-fields { align-items: end; }
+.duration-stepper { display: grid; gap: 7px; min-width: 158px; }
+.duration-stepper > span { color: var(--muted, #a7b2c5); font-size: .8rem; font-weight: 700; }
+.duration-stepper > div { display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; overflow: hidden; min-height: 42px; border: 1px solid rgba(93, 166, 255, .32); border-radius: 10px; background: rgba(8, 18, 34, .76); }
+.duration-stepper button { display: grid; width: 38px; height: 42px; place-items: center; color: #91c9ff; background: transparent; border: 0; cursor: pointer; }
+.duration-stepper button:focus-visible, .summary-continue:focus-visible { outline: 2px solid #8ccaff; outline-offset: 3px; }
+.duration-stepper strong { text-align: center; color: #fff; }
+.duration-stepper small { color: #50aaff; font-size: .72rem; }
+.booking-notice { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 12px 14px; color: #d8efff; border: 1px solid rgba(91, 186, 255, .42); border-radius: 12px; background: linear-gradient(100deg, rgba(20, 99, 168, .26), rgba(9, 31, 54, .78)); box-shadow: inset 0 1px rgba(195, 235, 255, .1); font-size: .82rem; }
+.booking-notice svg { color: #65c6ff; }.booking-notice button { display: grid; width: 26px; height: 26px; place-items: center; color: #b5dfff; border: 0; border-radius: 7px; background: rgba(108, 192, 255, .12); cursor: pointer; }
+.booking-builder-page .rental-date-fields { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.rental-date-fields label > span { display: flex; align-items: center; gap: 5px; }.rental-date-fields input:disabled { cursor: not-allowed; opacity: .68; }
+.schedule-hint { display: block; margin-top: 9px; color: #72c3ff; font-size: .75rem; }
+.midweek-explainer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 13px; padding: 12px; border: 1px solid rgba(130, 89, 255, .36); border-radius: 10px; background: linear-gradient(100deg, rgba(81, 41, 155, .2), rgba(11, 33, 58, .64)); color: #cddfff; font-size: .72rem; }.midweek-explainer strong { grid-column: 1 / -1; color: #e7d9ff; font-size: .82rem; }.midweek-explainer span { padding: 7px; border-radius: 7px; background: rgba(9, 17, 37, .36); }
+.booking-summary-detailed .summary-time-line { display: flex; align-items: center; gap: 8px; margin-top: 10px; color: #86a7c5; font-size: .7rem; }.booking-summary-detailed .summary-time-line svg { color: #5fb8ff; }.booking-summary-detailed .summary-time-line span:last-child { margin-left: auto; }
+.booking-summary-detailed .summary-details { display: grid; gap: 0; }
+.booking-summary-detailed .summary-block { padding: 16px 0; border-bottom: 1px dashed rgba(130, 166, 207, .28); }
+.booking-summary-detailed .summary-block-title, .booking-summary-detailed .summary-row, .booking-summary-detailed .summary-rate-line, .booking-summary-detailed .summary-date-line, .booking-summary-detailed .summary-charges > div, .booking-summary-detailed .summary-addon-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.booking-summary-detailed .summary-block-title { margin-bottom: 10px; }
+.booking-summary-detailed .summary-block-title > span { color: #eef6ff; font-weight: 800; font-size: .89rem; }
+.booking-summary-detailed .summary-block-title small { color: #5fb8ff; font-size: .7rem; }
+.booking-summary-detailed .summary-row span { color: #f5f8ff; font-size: .87rem; font-weight: 700; }
+.booking-summary-detailed .summary-row strong { color: #fff; font-size: .92rem; white-space: nowrap; }
+.booking-summary-detailed .summary-rate-line { margin-top: 6px; color: #8da1ba; font-size: .74rem; }
+.booking-summary-detailed .summary-rate-line span:last-child { color: #62b9ff; text-transform: capitalize; }
+.booking-summary-detailed .summary-date-line { color: #c9d8ea; font-size: .76rem; }
+.booking-summary-detailed .summary-date-line > span { flex: 1; }
+.booking-summary-detailed .summary-date-line b { color: #53aaff; margin: 0 3px; }
+.booking-summary-detailed .summary-date-line strong { color: #fff; font-size: .73rem; white-space: nowrap; }
+.booking-summary-detailed .summary-addon-list { display: grid; gap: 11px; }
+.booking-summary-detailed .summary-addon-list > div { align-items: flex-start; color: #e8f1fc; font-size: .78rem; }
+.booking-summary-detailed .summary-addon-list span { display: grid; gap: 3px; }
+.booking-summary-detailed .summary-addon-list span small { color: #8298b3; font-size: .68rem; }
+.booking-summary-detailed .summary-addon-list strong { color: #fff; white-space: nowrap; font-size: .8rem; }
+.booking-summary-detailed .summary-empty-addons { margin: 0; color: #7f92aa; font-size: .76rem; }
+.booking-summary-detailed .summary-charges { display: grid; gap: 9px; padding: 15px 0; color: #b8c8da; font-size: .78rem; }
+.booking-summary-detailed .summary-charges strong { color: #fff; font-size: .8rem; }
+.booking-summary-detailed .summary-delivery-inline { margin: 0 0 16px; padding: 10px 11px; border-radius: 10px; border: 1px solid rgba(64, 161, 255, .18); background: rgba(39, 123, 211, .09); }
+.booking-summary-detailed .summary-delivery-inline span { display: grid; gap: 2px; }
+.booking-summary-detailed .summary-delivery-inline strong { color: #dceeff; font-size: .76rem; }
+.booking-summary-detailed .summary-delivery-inline em { color: #75a4ca; font-style: normal; font-size: .67rem; }
+.booking-summary-detailed .summary-total { margin-top: 0; }
+.booking-summary-detailed .summary-total small { display: block; margin-top: 5px; color: #86a0bd; font-size: .68rem; }
+.booking-summary-detailed .summary-continue { width: 100%; margin-top: 17px; justify-content: center; }
+.booking-summary-detailed .secure-note { justify-content: center; margin: 12px 0 0; }
+@media (max-width: 900px) { .booking-builder-page .rental-date-fields { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 720px) { .rental-date-fields { grid-template-columns: 1fr; } .booking-builder-page .rental-date-fields { grid-template-columns: 1fr; } .duration-stepper { min-width: 0; } .booking-summary-detailed .summary-date-line { align-items: flex-start; } }
+@media (max-width: 520px) { .midweek-explainer { grid-template-columns: 1fr; } }
