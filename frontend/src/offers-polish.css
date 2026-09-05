@@ -1,0 +1,5 @@
+.power-deals-copy { max-width: 520px; margin: 14px 0 0; color: #9dacbf; font-size: 14px; line-height: 1.6; }
+.home-offer-grid { align-items: stretch; }.home-offer-grid .offer-card { display: flex; min-height: 365px; flex-direction: column; }.home-offer-grid .offer-link { margin-top: auto; }
+.midweek-offer-card { border-color: rgba(169, 102, 255, .48); background: linear-gradient(145deg, #211a45, #10162a 74%); box-shadow: inset 0 1px rgba(229, 202, 255, .13), 0 16px 38px rgba(102, 53, 191, .14); }.midweek-card-badge { position: absolute; top: 16px; right: 16px; padding: 5px 8px; color: #f2e9ff; border: 1px solid rgba(209, 160, 255, .48); border-radius: 20px; background: rgba(124, 59, 211, .3); font: 9px 'DM Mono', monospace; letter-spacing: .7px; }.midweek-offer-card .offer-days, .midweek-offer-card .offer-rate { color: #cfa8ff; }.midweek-offer-card .offer-link { color: #d5b4ff; }
+@media (max-width: 900px) { .home-offer-grid .offer-card { min-height: 350px; } }
+@media (max-width: 600px) { .home-offer-grid .offer-card { min-height: 0; } }

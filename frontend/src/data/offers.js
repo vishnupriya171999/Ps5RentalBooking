@@ -10,7 +10,12 @@ export const offers = [
 ]
 
 export const specialOffer = { id: 'midweek-single', name: 'Midweek Special', days: 3, price: 1350, controllers: 1, description: 'Tuesday to Thursday only — three days of PS5 gaming at a special midweek price.', rate: '₹450 / day' }
-export const bookingOffers = [...offers, specialOffer]
+export const bookingOffers = [
+  offers.find((offer) => offer.id === 'daily-single'),
+  offers.find((offer) => offer.id === 'three-day-duo'),
+  ...offers.filter((offer) => !['daily-single', 'three-day-duo'].includes(offer.id)),
+  specialOffer,
+]
 
 export const addOns = [
   { id: 'aaa-games', name: 'AAA or Wish Games', price: 1000, unit: 'per package', description: 'Add premium titles or request your favourite games.', perDay: false },

@@ -1,12 +1,13 @@
 import { CalendarDays, CheckCircle2, Clock3, X } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import BookingSummary from '../components/BookingSummary'
 import PackageCarousel from '../components/PackageCarousel'
 import AddOnsPicker from '../components/AddOnsPicker'
 import { addOns, bookingOffers } from '../data/offers'
 import '../booking-builder.css'
 import '../booking-builder-detail.css'
+import '../booking-polish.css'
 
 const toDateInputValue = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 const getToday = () => toDateInputValue(new Date())
@@ -20,7 +21,6 @@ const getNextTuesday = (fromDate) => { const date = new Date(`${fromDate}T00:00:
 
 function Booking() {
   const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
   const defaultOffer = bookingOffers.find((offer) => offer.id === 'three-day-duo')
   const initialOffer = bookingOffers.find((offer) => offer.id === searchParams.get('package')) || defaultOffer
   const defaultStart = getToday()
@@ -89,9 +89,9 @@ function Booking() {
   }
   const cancelControllerOnly = () => updateControllerOnly(0)
   const confirmBooking = () => {
-    if (!selectedOffer && !controllerOnlyQuantity) return setDateError('Choose a PS5 package or Controllers Only rental.')
-    if (!rentalStartDate || !rentalEndDate) return setDateError('Please choose rental dates.')
-    navigate('/booking-success', { state: { bookingId: `PL-${Date.now().toString().slice(-6)}` } })
+    if (!selectedOffer && !controllerOnlyQuantity) { setDateError('Choose a PS5 package or Controllers Only rental.'); return false }
+    if (!rentalStartDate || !rentalEndDate) { setDateError('Please choose rental dates.'); return false }
+    return true
   }
 
   return <section className="page-section booking-page booking-builder-page"><div className="container"><div className="booking-builder-layout"><div className="booking-builder-main"><div className="booking-builder-heading"><p className="eyebrow">PS5 RENTAL BUILDER</p><h1>Build Your PS5 Package</h1><p>Delivery and pickup default to your current local time.</p></div>{notice && <div className="booking-notice" role="status"><CheckCircle2 size={18} /><span>{notice}</span><button type="button" onClick={() => setNotice('')} aria-label="Dismiss notification"><X size={16} /></button></div>}<section className="rental-dates" aria-label="Select rental schedule"><div className="rental-date-title"><CalendarDays size={18} /><span>Delivery & pickup schedule</span></div><div className="rental-date-fields"><label><span>Delivery date</span><input type="date" value={rentalStartDate} onChange={(event) => updateStartDate(event.target.value)} min={getToday()} /></label><label><span>Pickup date</span><input type="date" value={rentalEndDate} onChange={(event) => { if (!selectedOffer || selectedOffer.id !== 'midweek-single') setRentalEndDate(event.target.value) }} min={rentalStartDate} disabled={selectedOffer?.id === 'midweek-single'} /></label><label><span><Clock3 size={13} /> Delivery time</span><input type="time" value={deliveryTime} onChange={(event) => setDeliveryTime(event.target.value)} /></label><label><span><Clock3 size={13} /> Pickup time</span><input type="time" value={pickupTime} onChange={(event) => setPickupTime(event.target.value)} /></label></div>{selectedOffer?.id === 'midweek-single' && <div className="midweek-explainer"><strong>How the Midweek Special works</strong><span>Delivery: Tuesday, 8:00 PM</span><span>Play: Tuesday, Wednesday and Thursday</span><span>Pickup: Friday, 8:00 PM</span></div>}{dateError && <small className="date-error">{dateError}</small>}</section><PackageCarousel offers={bookingOffers} selectedId={selectedId} onSelect={applyPlan} /><AddOnsPicker addOns={addOns} days={totalDays} selectedIds={selectedAddOnIds} onToggle={toggleAddOn} extraControllerQuantity={extraControllerQuantity} onExtraControllerChange={updateExtraControllers} controllerOnlyQuantity={controllerOnlyQuantity} onControllerOnlyChange={updateControllerOnly} onControllerOnlySelect={selectControllerOnly} onControllerOnlyCancel={cancelControllerOnly} hasPlan={Boolean(selectedOffer)} /></div><BookingSummary selectedOffer={selectedOffer} selectedAddOns={selectedAddOns} startDate={rentalStartDate} endDate={rentalEndDate} deliveryTime={deliveryTime} pickupTime={pickupTime} totalDays={totalDays} planAmount={planAmount} addOnsTotal={addOnsTotal} totalAmount={totalAmount} selectionCount={selectionCount} controllerOnlyQuantity={controllerOnlyQuantity} onContinue={confirmBooking} /></div></div></section>
