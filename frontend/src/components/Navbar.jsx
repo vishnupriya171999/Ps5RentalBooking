@@ -1,7 +1,7 @@
 import { Menu, X } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import brandLogo from '../assets/ps5-rental-chennai-logo-simple.svg'
+const brandLogo = '/images/brand/ps-rental-symbol.png'
 import FloatingWhatsApp from './FloatingWhatsApp'
 import '../mobile-nav.css'
 import '../brand-style.css'
@@ -41,7 +41,7 @@ function Navbar() {
 
   useEffect(() => {
     if (pathname !== '/') return undefined
-    const sections = [...document.querySelectorAll('#home, #offers, #games, #why-us, #contact')]
+    const sections = [...document.querySelectorAll('#home, #offers, #games, #why-us, #how-it-works, #contact')]
     const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
       if (visible) setActiveSection(visible.target.id)
@@ -51,6 +51,6 @@ function Navbar() {
     return () => observer.disconnect()
   }, [pathname])
 
-  return <header className="site-header" ref={menuRef}><nav className="navbar container" aria-label="Main navigation"><Link to="/#home" className="brand" aria-label="Go to home page" onClick={(event) => goToSection(event, 'home')}><img className="brand-mark" src={brandLogo} alt="" />PS5<span>RentalChennai</span></Link><button type="button" className="menu-button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen} aria-controls="primary-navigation">{isOpen ? <X /> : <Menu />}</button><div id="primary-navigation" className={`nav-links ${isOpen ? 'open' : ''}`}><Link to="/#home" className={isActive('home') ? 'active' : ''} onClick={(event) => goToSection(event, 'home')}>Home Base</Link><Link to="/#offers" className={isActive('offers') ? 'active' : ''} onClick={(event) => goToSection(event, 'offers')}>Power Deals</Link><Link to="/#games" className={isActive('games') ? 'active' : ''} onClick={(event) => goToSection(event, 'games')}>Game Vault</Link><Link to="/#why-us" className={isActive('why-us') ? 'active' : ''} onClick={(event) => goToSection(event, 'why-us')}>Why Us</Link><Link to="/#contact" className={isActive('contact') ? 'active' : ''} onClick={(event) => goToSection(event, 'contact')}>Connect</Link><FloatingWhatsApp compact /></div></nav></header>
+  return <header className="site-header" ref={menuRef}><nav className="navbar container" aria-label="Main navigation"><Link to="/#home" className="brand" aria-label="Go to home page" onClick={(event) => goToSection(event, 'home')}><img className="brand-mark" src={brandLogo} alt="" width="48" height="48" />PS5<span>RentalChennai</span></Link><button type="button" className="menu-button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen} aria-controls="primary-navigation">{isOpen ? <X /> : <Menu />}</button><div id="primary-navigation" className={`nav-links ${isOpen ? 'open' : ''}`}><Link to="/#home" className={isActive('home') ? 'active' : ''} onClick={(event) => goToSection(event, 'home')}>Home Base</Link><Link to="/#offers" className={isActive('offers') ? 'active' : ''} onClick={(event) => goToSection(event, 'offers')}>Power Deals</Link><Link to="/#games" className={isActive('games') ? 'active' : ''} onClick={(event) => goToSection(event, 'games')}>Game Vault</Link><Link to="/#why-us" className={isActive('why-us') ? 'active' : ''} onClick={(event) => goToSection(event, 'why-us')}>Why Us</Link><Link to="/#how-it-works" className={isActive('how-it-works') ? 'active' : ''} onClick={(event) => goToSection(event, 'how-it-works')}>How to get it?</Link><Link to="/#contact" className={isActive('contact') ? 'active' : ''} onClick={(event) => goToSection(event, 'contact')}>Connect</Link><FloatingWhatsApp compact /></div></nav></header>
 }
 export default Navbar

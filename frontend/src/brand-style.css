@@ -40,8 +40,12 @@
 }
 
 .brand .brand-mark {
-  width: 34px;
-  height: 34px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: contain;
+  border-radius: 0;
+  border: 0;
   margin-right: 8px;
   filter: drop-shadow(0 4px 10px rgba(58, 170, 255, 0.34));
 }
@@ -53,6 +57,11 @@
 
 @media (max-width: 700px) {
   .brand { font-size: 14px; }
-  .brand .brand-mark { width: 30px; height: 30px; margin-right: 6px; }
+  .brand .brand-mark { width: 42px; height: 42px; margin-right: 6px; }
   .brand::before { left: 24px; bottom: -4px; }
+}
+
+.site-footer .brand .brand-mark { width: 80px; height: 80px; margin-right: 12px; border-radius: 0; }
+@media (max-width: 480px) {
+  .site-footer .brand .brand-mark { width: 56px; height: 56px; margin-right: 8px; }
 }

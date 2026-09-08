@@ -1,6 +1,7 @@
 import { MoveRight } from 'lucide-react'
 import { useRef, useState } from 'react'
 import OfferCard from './OfferCard'
+import PopularDealHighlight from './PopularDealHighlight'
 import '../offers-carousel.css'
 
 function HomeOffersCarousel({ offers }) {
@@ -13,7 +14,7 @@ function HomeOffersCarousel({ offers }) {
     setPosition(Math.round((track.scrollLeft / maxScroll) * 100))
   }
 
-  return <div className="home-offers-carousel"><div className="offers-carousel-toolbar"><span className="offers-scroll-cue">Explore every pack <MoveRight size={16} /></span></div><div className="offers-carousel-track" ref={trackRef} onScroll={updatePosition}>{offers.map((offer) => <OfferCard key={offer.id} offer={offer} />)}</div><div className="offers-carousel-progress" aria-hidden="true"><span style={{ width: `${Math.max(12, position)}%` }} /></div></div>
+  return <div className="home-offers-carousel"><PopularDealHighlight /><div className="offers-carousel-toolbar"><span className="offers-scroll-cue">Explore every pack <MoveRight size={16} /></span></div><div className="offers-carousel-track" ref={trackRef} onScroll={updatePosition}>{offers.map((offer) => <OfferCard key={offer.id} offer={offer} />)}</div><div className="offers-carousel-progress" aria-hidden="true"><span style={{ width: `${Math.max(12, position)}%` }} /></div></div>
 }
 
 export default HomeOffersCarousel

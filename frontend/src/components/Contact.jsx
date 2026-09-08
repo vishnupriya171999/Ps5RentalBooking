@@ -1,5 +1,6 @@
 import { Check, Copy, MapPin, Phone } from 'lucide-react'
 import { useState } from 'react'
+import { getWhatsAppLink } from '../data/whatsapp'
 
 const contactNumber = '+91 9789830356'
 
@@ -20,7 +21,7 @@ function Contact() {
     window.setTimeout(() => setCopied(false), 1800)
   }
 
-  return <section className="section contact-section" id="contact"><div className="container"><div className="section-heading center"><p className="eyebrow">CONNECT</p><h2>Your next session <span>starts here.</span></h2></div><div className="contact-grid"><article className="contact-card"><Phone size={25} /><h3>Call</h3><div className="contact-number-row"><span>{contactNumber}</span><button type="button" className={`contact-copy ${copied ? 'copied' : ''}`} onClick={copyNumber} aria-label="Copy phone number">{copied ? <><Check size={15} /><span>Copied</span></> : <><Copy size={15} /><span>Copy</span></>}</button></div></article><a className="contact-card contact-action whatsapp" href="https://wa.me/919789830356" target="_blank" rel="noreferrer"><WhatsAppIcon /><h3>WhatsApp</h3><span>Chat with us</span></a><a className="contact-card contact-action" href="https://www.instagram.com/play.stationrental/" target="_blank" rel="noreferrer"><InstagramIcon /><h3>Instagram</h3><span>@play.stationrental</span></a><article className="contact-card"><MapPin size={25} /><h3>Location</h3><strong>Velachery, Chennai</strong></article></div></div></section>
+  return <section className="section contact-section" id="contact"><div className="container"><div className="section-heading center"><p className="eyebrow">CONNECT</p><h2>Your next session <span>starts here.</span></h2></div><div className="contact-grid"><article className="contact-card"><Phone size={25} /><h3>Call</h3><div className="contact-number-row"><span>{contactNumber}</span><button type="button" className={`contact-copy ${copied ? 'copied' : ''}`} onClick={copyNumber} aria-label="Copy phone number">{copied ? <><Check size={15} /><span>Copied</span></> : <><Copy size={15} /><span>Copy</span></>}</button></div></article><a className="contact-card contact-action whatsapp" href={getWhatsAppLink()} target="_blank" rel="noreferrer"><WhatsAppIcon /><h3>WhatsApp</h3><span>Chat with us</span></a><a className="contact-card contact-action" href="https://www.instagram.com/play.stationrental/" target="_blank" rel="noreferrer"><InstagramIcon /><h3>Instagram</h3><span>@play.stationrental</span></a><a className="contact-card contact-action" href="https://maps.google.com/?q=12.978386209924443,80.20905420992445" target="_blank" rel="noopener noreferrer" aria-label="Open Velachery, Chennai location in Google Maps"><MapPin size={25} /><h3>Location</h3><strong>Velachery, Chennai</strong></a></div></div></section>
 }
 
 export default Contact

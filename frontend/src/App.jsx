@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Offers from './pages/Offers'
 import Booking from './pages/Booking'
 import BookingSuccess from './pages/BookingSuccess'
+import SpecialCatalogue from './pages/SpecialCatalogue'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
 
 function App() {
@@ -20,6 +21,6 @@ function App() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [hash, pathname])
 
-  return <div className="app-shell"><Navbar /><main><Routes><Route path="/" element={<Home />} /><Route path="/offers" element={<Offers />} /><Route path="/book" element={<Booking />} /><Route path="/booking-success" element={<BookingSuccess />} /><Route path="*" element={<Home />} /></Routes></main><Footer /><FloatingWhatsApp /></div>
+  return <div className="app-shell"><Navbar /><main><Routes><Route path="/" element={<Home />} /><Route path="/offers" element={<Offers />} /><Route path="/special-catalogue" element={<SpecialCatalogue />} /><Route path="/book" element={<Booking />} /><Route path="/booking-success" element={<BookingSuccess />} /><Route path="*" element={<Home />} /></Routes></main><Footer /><FloatingWhatsApp /></div>
 }
 export default App

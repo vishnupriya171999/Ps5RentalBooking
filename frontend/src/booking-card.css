@@ -61,8 +61,8 @@
 
 /* Keep the checkout dialog above the full page, not inside the summary card. */
 .booking-summary-premium { overflow: visible; }
-.booking-details-overlay { overscroll-behavior: contain; background: rgba(1, 7, 15, .9); }
-.booking-details-modal { max-height: calc(100dvh - 40px); overflow-y: auto; animation: booking-modal-in .22s ease-out; }
+.booking-details-overlay { overscroll-behavior: contain; touch-action: none; background: rgba(1, 7, 15, .9); }
+.booking-details-modal { max-height: calc(100dvh - 40px); overflow-y: auto; touch-action: pan-y; animation: booking-modal-in .22s ease-out; }
 body:has(.booking-details-overlay) { overflow: hidden; }
 @keyframes booking-modal-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
@@ -100,4 +100,9 @@ body:has(.booking-details-overlay) { overflow: hidden; }
 .booking-details-modal textarea { min-height: 72px; }.booking-details-modal label:last-of-type textarea { min-height: 62px; }.booking-details-modal .use-location-button { margin-top: -2px; }.booking-details-modal .booking-modal-submit { margin-top: 2px; min-height: 46px; }
 @media (max-width: 650px) { .booking-details-modal { grid-template-columns: 1fr; width: min(100%, 470px); padding: 23px 19px; gap: 10px; }.booking-details-modal > label:nth-of-type(1), .booking-details-modal > label:nth-of-type(2) { grid-column: 1 / -1; }.booking-details-modal textarea { min-height: 68px; } }
 
+@media (max-width: 650px) { .booking-details-overlay { width: 100dvw; max-width: 100dvw; padding: 10px; overflow: hidden; }.booking-details-modal { width: calc(100dvw - 20px); max-width: calc(100dvw - 20px); min-width: 0; max-height: calc(100dvh - 20px); padding: 20px 16px; overflow-x: hidden; }.booking-details-modal label, .booking-details-modal input, .booking-details-modal textarea { min-width: 0; max-width: 100%; }.booking-details-modal input, .booking-details-modal textarea { width: 100%; }.booking-details-modal h2 { padding-right: 30px; } }
+
 .booking-confirmed-overlay { background: rgba(1, 9, 17, .86); }.booking-confirmed-modal { width: min(100%, 420px); padding: 36px 30px 30px; color: #eaf6ff; border: 1px solid rgba(84, 215, 151, .4); border-radius: 20px; background: radial-gradient(circle at 50% 0, rgba(42, 183, 119, .2), transparent 36%), linear-gradient(145deg, #12342e, #091923 68%); box-shadow: 0 30px 90px rgba(0, 0, 0, .58), inset 0 1px rgba(223, 255, 242, .13); text-align: center; animation: booking-modal-in .22s ease-out; }.booking-confirmed-icon { display: inline-grid; width: 68px; height: 68px; place-items: center; margin-bottom: 17px; color: #65ebaa; border: 1px solid rgba(104, 235, 170, .38); border-radius: 50%; background: rgba(57, 185, 117, .14); box-shadow: 0 0 34px rgba(65, 223, 139, .2); }.booking-confirmed-modal .eyebrow { margin-bottom: 12px; color: #8eecc0; }.booking-confirmed-modal h2 { margin: 0; font-size: 29px; letter-spacing: -1px; }.booking-confirmed-modal p:not(.eyebrow) { margin: 13px 0 23px; color: #b1d1c5; font-size: .88rem; line-height: 1.6; }.booking-confirmed-modal .button { width: 100%; min-height: 47px; }
+.booking-details-modal input:disabled, .booking-details-modal textarea:disabled { color: #9dacbf; background: rgba(4, 17, 31, .45); cursor: not-allowed; opacity: .8; }
+.booking-details-modal button:disabled { opacity: .6; cursor: wait; transform: none; }
+.booking-details-modal label > small { display: block; margin-top: 6px; color: #9dacbf; font-size: 12px; font-weight: 400; line-height: 1.5; }
