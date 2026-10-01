@@ -1,28 +1,22 @@
-# Admin login
+# Admin panel
 
-Open `/admin` to view the admin login screen. `AdminLogin.tsx`, its scoped
-stylesheet, and its background image live in this directory.
+Open `/admin` to sign in with a mobile number and password. Successful backend
+authentication opens `/admin/dashboard`. Redux holds the login details and
+localStorage restores them on refresh. Sign out clears both.
 
-This is a login-only screen matching the customer's dark blue theme, with a
-full-screen PS5 photo background, a login card, and administrator welcome copy. It contains no
-module descriptions or customer navigation. The separate customer website
-remains at `/customer`.
+`AdminPanel.tsx` declares the routes. `AdminLogin.tsx` uses `useNavigate()` to open
+the dashboard without a callback prop. `AdminDashboard.tsx` contains the responsive
+dashboard and its sample views; records live in `dashboardData.ts`.
 
-The compact layout fits common desktop, tablet, and phone viewports without
-page scrolling. Short viewports hide decorative content to prioritize the form.
-Very small viewports or accessibility zoom can still scroll to keep controls reachable.
-Small decorative controller icons fall behind the content and never intercept
-pointer events. The photo background has no grid overlay. There is no motion button; background animations are
-disabled automatically for reduced-motion preferences. Mobile
-layouts use fewer controller icons and keep the welcome message in the form.
+Search, status filters, order details, revenue periods, schedule, availability,
+and inventory use fictional sample data. No booking or inventory mutations are
+connected. Customer navigation stays at `/customer`.
 
-Mobile number/password fields use inline required-field validation with reserved error space. The mobile field accepts
-a 10-digit Indian mobile number with a displayed +91 prefix. The password visibility control
-works, but submission does not authenticate, save credentials, or grant access.
-Valid submissions show no placeholder message; authentication will be connected later.
-Future admin APIs must enforce authentication and admin authorization on the
-server; the route itself is not an access-control boundary.
+The client route guard checks the local session. Before connecting real admin
+records, protect backend endpoints with JWT verification and admin permissions.
+See [Redux setup](../store/README.md) and [backend login](../../../backend/LOGIN.md).
 
-Background image: the PS5 image already referenced by the public site's hero,
-stored locally for this page. Source:
-https://images.unsplash.com/photo-1606144042614-b2417e99c4e3
+The login matches the customer brand and dark theme. Its photo background has no
+grid overlay. Decorative controllers fall behind the form and respect reduced motion.
+
+Photo source: https://images.unsplash.com/photo-1606144042614-b2417e99c4e3

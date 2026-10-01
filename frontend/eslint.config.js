@@ -32,6 +32,8 @@ export default defineConfig([
 
     rules: {
       'no-undef': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   { files: ['**/*.js'], rules: { 'no-undef': 'error' } },

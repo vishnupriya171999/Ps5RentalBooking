@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Eye, EyeOff, Gamepad2, LockKeyhole, ShieldCheck, Smartphone } from 'lucide-react'
 import '../brand-style.css'
 import './admin-login.css'
 import type { FormEvent } from 'react'
+import { loginAdmin } from '../api/auth'
+import { setLoginDetails, logout } from '../store/authSlice'
+import { decodeLoginToken } from '../auth/session'
+import { useAppDispatch } from '../store/hooks'
 
 // Separate lanes and evenly staggered phases keep the rain spaced on every loop.
 const fallingControllers = Array.from({ length: 10 }, (_, index) => ({
@@ -14,6 +19,10 @@ const fallingControllers = Array.from({ length: 10 }, (_, index) => ({
 }))
 
 const AdminLogin = () => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const [submitting, setSubmitting] = useState(false)
+  const [loginError, setLoginError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({ mobile: '', password: '' })
 
@@ -23,21 +32,40 @@ const AdminLogin = () => {
     return () => { document.title = previousTitle }
   }, [])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (submitting) return
     const form = event.currentTarget
     const data = new FormData(form)
     const mobile = String(data.get('mobile') || '').trim()
     const password = String(data.get('password') || '')
     const nextErrors = {
       mobile: !mobile ? 'Enter your mobile number.' : !/^[6-9][0-9]{9}$/.test(mobile) ? 'Enter a valid 10-digit mobile number.' : '',
-      password: !password.trim() ? 'Enter your password.' : '',
+      password: !password.trim() ? 'Enter your password.' : new TextEncoder().encode(password).length > 72 ? 'Password must be at most 72 bytes.' : '',
     }
     setErrors(nextErrors)
+    setLoginError('')
     const firstInvalid = nextErrors.mobile ? 'mobile' : nextErrors.password ? 'password' : null
     const input = firstInvalid ? form.elements.namedItem(firstInvalid) : null
     if (input instanceof HTMLInputElement) input.focus({ preventScroll: true })
-    // Connect backend authentication after validating the fields.
+    if (firstInvalid) return
+    dispatch(logout())
+    setSubmitting(true)
+    try {
+      const token = await loginAdmin(mobile, password)
+
+      if (!token) {
+        throw new Error('Login failed')
+      }
+
+      const loginDetails = decodeLoginToken(token)
+
+      dispatch(setLoginDetails(loginDetails))
+      form.reset()
+      navigate('/admin/dashboard', { replace: true })
+    } catch (error) {
+      setLoginError(error instanceof Error ? error.message : 'Login failed. Please try again.')
+    } finally { setSubmitting(false) }
   }
 
   return (
@@ -82,6 +110,7 @@ const AdminLogin = () => {
             <p className="admin-login-description">Enter your admin credentials to continue.</p>
 
             <form className="admin-login-form" noValidate onSubmit={handleSubmit} onChange={event => {
+              setLoginError('')
               const target = event.target
               if (!(target instanceof HTMLInputElement)) return
               const { name } = target
@@ -89,7 +118,7 @@ const AdminLogin = () => {
             }}>
               <div className="admin-field">
                 <label htmlFor="admin-mobile">Mobile number <span className="admin-required" aria-hidden="true">*</span></label>
-                <div className={`admin-input-wrap${errors.mobile ? ' admin-input-error' : ''}`}><Smartphone size={18} aria-hidden="true" /><span className="admin-country-code" aria-hidden="true">+91</span><input id="admin-mobile" name="mobile" type="tel" inputMode="numeric" placeholder="Enter mobile number" autoComplete="username" pattern="[6-9][0-9]{9}" maxLength={10} title="Enter a 10-digit Indian mobile number starting with 6, 7, 8, or 9" aria-describedby="admin-mobile-help admin-mobile-error" aria-invalid={Boolean(errors.mobile)} required /></div>
+                <div className={`admin-input-wrap${errors.mobile ? ' admin-input-error' : ''}`}><Smartphone size={18} aria-hidden="true" /><span className="admin-country-code" aria-hidden="true">+91</span><input id="admin-mobile" name="mobile" type="tel" inputMode="numeric" placeholder="Enter mobile number" disabled={submitting} autoComplete="username" pattern="[6-9][0-9]{9}" maxLength={10} title="Enter a 10-digit Indian mobile number starting with 6, 7, 8, or 9" aria-describedby="admin-mobile-help admin-mobile-error" aria-invalid={Boolean(errors.mobile)} required /></div>
                 <span className="admin-sr-only" id="admin-mobile-help">Indian mobile number, country code +91. Enter 10 digits.</span>
                 <p className="admin-field-error" id="admin-mobile-error" aria-live="polite">{errors.mobile}</p>
               </div>
@@ -97,13 +126,13 @@ const AdminLogin = () => {
                 <label htmlFor="admin-password">Password <span className="admin-required" aria-hidden="true">*</span></label>
                 <div className={`admin-input-wrap${errors.password ? ' admin-input-error' : ''}`}>
                   <LockKeyhole size={18} aria-hidden="true" />
-                  <input id="admin-password" name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter your password" autoComplete="current-password" aria-describedby="admin-password-error" aria-invalid={Boolean(errors.password)} required />
+                  <input id="admin-password" name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter your password" disabled={submitting} autoComplete="current-password" aria-describedby="admin-password-error" aria-invalid={Boolean(errors.password)} required />
                   <button className="admin-password-toggle" type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword} aria-controls="admin-password">{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button>
                 </div>
                 <p className="admin-field-error" id="admin-password-error" aria-live="polite">{errors.password}</p>
               </div>
-              <p className="admin-account-note"><ShieldCheck size={15} /> Access is limited to authorized administrators.</p>
-              <button className="admin-submit" type="submit"><span>Sign in to admin</span><ArrowRight size={19} /></button>
+              <p className={`admin-auth-message${loginError ? ' has-error' : ''}`} role="status" aria-live="polite">{loginError || 'Access is limited to authorized administrators.'}</p>
+              <button className="admin-submit" type="submit" disabled={submitting} aria-busy={submitting}><span>{submitting ? 'Signing in...' : 'Sign in to admin'}</span><ArrowRight size={19} /></button>
             </form>
           </div>
         </section>
