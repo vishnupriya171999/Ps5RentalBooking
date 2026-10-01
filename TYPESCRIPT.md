@@ -19,7 +19,8 @@ npm run build
 
 The production build checks types before bundling. Shared booking types are in
 `src/types.ts`. The admin submit handler uses `FormEvent<HTMLFormElement>`.
-Authentication is not connected yet; validation does not grant admin access.
+Admin login calls the backend and stores the JWT and public user details in Redux
+and localStorage. See `frontend/src/store/README.md` and `backend/LOGIN.md`.
 Password hashing belongs in the backend, not in the browser bundle.
 
 ## Backend

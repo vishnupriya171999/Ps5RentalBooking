@@ -22,5 +22,7 @@
     }
   ],
   "typescript.suggest.autoImports": true,
-  "typescript.validate.enable": true
+  "typescript.validate.enable": true,
+  "typescript.showUnused": false,
+  "javascript.showUnused": false
 }
