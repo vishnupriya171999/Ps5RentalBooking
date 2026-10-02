@@ -112,3 +112,14 @@
 
 .managers-module .dash-search input:focus-visible { outline: none; box-shadow: none; }
 .managers-module .dash-search:focus-within { border-color: #293a51; }
+
+.manager-skeleton { display: block; max-width: 100%; height: 12px; border: 0; border-radius: 5px; background: linear-gradient(90deg, #1b2b40 25%, #2b405a 50%, #1b2b40 75%); background-size: 200% 100%; animation: manager-skeleton-shimmer 1.6s ease-in-out infinite; }
+.manager-avatar.manager-skeleton { height: 44px; border-radius: 50%; }
+.manager-skeleton-name { width: 112px; }
+.manager-skeleton-phone { width: 94px; }
+.manager-skeleton-role { width: 65px; }
+.manager-skeleton-status { width: 58px; height: 24px; }
+.manager-table tbody .manager-skeleton-row:hover { background: transparent; }
+@keyframes manager-skeleton-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (max-width: 760px) { .manager-avatar.manager-skeleton { height: 36px; }.manager-skeleton-name { width: 88px; } }
+@media (prefers-reduced-motion: reduce) { .manager-skeleton { animation: none; } }
