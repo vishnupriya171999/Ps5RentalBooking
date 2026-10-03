@@ -23,7 +23,7 @@ export const requireActiveManager = async (_req: Request, res: Response, next: N
 
 export const requireManagerAdmin = (_req: Request, res: Response, next: NextFunction) => {
   if (res.locals.manager.role.trim().toUpperCase() !== 'ADMIN') {
-    return res.status(403).json({ success: false, message: 'Only administrators can update manager accounts.' });
+    return res.status(403).json({ success: false, message: 'Only administrators can create or update manager accounts.' });
   }
   next();
 };

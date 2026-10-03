@@ -2,10 +2,10 @@ import axios from 'axios'
 import { store } from '../store/store'
 import { logout } from '../store/authSlice'
 import type { AxiosRequestConfig } from 'axios'
+import { API_BASE_URL } from '../config/api'
 
-const apiOrigin = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '')
 const http = axios.create({
-  baseURL: `${apiOrigin}/api/v1`,
+  baseURL: API_BASE_URL,
   timeout: 10000,
   headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 })

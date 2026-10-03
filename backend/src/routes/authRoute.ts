@@ -18,7 +18,7 @@ router.post(API.LOGIN, loginLimit, login);
 router.get(API.MANAGERS, requireActiveManager, getManagers);
 router.get(API.MANAGERS + '/:mobile', requireActiveManager, getManager);
 router.put(API.MANAGERS + '/:id', requireActiveManager, requireManagerAdmin, editManager);
-router.post(API.MANAGERS, rateLimit({
+router.post(API.MANAGERS, requireActiveManager, requireManagerAdmin, rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
   standardHeaders: 'draft-8',

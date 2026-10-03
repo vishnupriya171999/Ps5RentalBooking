@@ -2,9 +2,9 @@ import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { jwtPublicKey } from '../jwtKeys.js';
 
-// Public customer availability and account entry points do not require a session.
+// Only customer availability and login do not require a session.
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  const publicRoute = (req.method === 'POST' && ['/auth/login', '/auth/managers'].includes(req.path)) ||
+  const publicRoute = (req.method === 'POST' && req.path === '/auth/login') ||
     (req.method === 'GET' && req.path === '/availability/consoles');
   if (publicRoute) return next();
   res.setHeader('Cache-Control', 'no-store');

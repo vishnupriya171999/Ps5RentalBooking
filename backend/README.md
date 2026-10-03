@@ -1,55 +1,45 @@
 # PS5 Rental Backend
 
-Node.js, Express, and PostgreSQL backend using ES modules throughout.
+Node.js, Express, TypeScript, and PostgreSQL using ES modules.
 
-## Structure
+## Run locally
 
-1. `src/constant.js`: flat endpoint names and paths, such as `CONSOLES: "/consoles"`.
-2. `src/routes/availabilityRoute.js`: HTTP methods and handler mapping.
-3. `src/handlers/availabilityHandler.js`: HTTP responses and request error handling.
-4. `src/dao/availabilityDao.js`: SQL queries and database results.
-5. `src/db.js`: environment loading and the shared PostgreSQL pool.
-6. `src/routes/registerRoutes.js`: feature router registration.
+From `backend/`, run `npm ci` and `npm run dev`. Configure database credentials
+and matching RSA JWT keys in `.env` using `.env.example` as a reference. Preserve
+existing credentials. `DATABASE_URL` is preferred; separate `DB_*` variables are
+also supported. PostgreSQL connections require verified TLS.
 
-`src/app.js` configures Express and JSON error responses. `server.js` checks
-database connectivity, starts the HTTP server, and handles shutdown.
+Local host and port are shared with the frontend in `../network.config.json`.
+Edit that file and restart both servers when changing ports. Remove local
+`PORT`/`HOST` overrides if you want to use the shared settings.
 
-The API prefix `/api/v1` is mounted in `src/app.js`; the feature prefix
-`/availability` is mounted in `src/routes/registerRoutes.js`.
-In your editor, use Find All References on `CONSOLES` to locate its route.
-Use Go to Definition on the route's `getAllConsoles` handler and then on
-`availabilityDao.getAllConsoles` to navigate to the handler and DAO.
+`npm run build` compiles to `dist/`; `npm start` runs the compiled Node server.
+Run `npm test` and `npm run typecheck` to verify changes. Tests stub database
+queries and do not create real accounts.
 
-## Run
+## Structure and endpoints
 
-Use Node.js 20 or later. From the backend directory:
+`src/app.ts` configures Express, JSON responses, CORS, and the API prefix.
+`src/routes/` maps endpoints to `src/handlers/`; handlers call SQL functions in
+`src/dao/`, using the pool in `src/db.ts`. `server.ts` checks database connectivity
+and manages the conventional Node listener. `src/config.ts` resolves network
+settings and environment overrides.
 
-```sh
-npm ci
-npm run dev
-```
+- `GET /`: liveness response.
+- `GET /api/v1/availability/consoles`: public connection test returning database
+  time (`SELECT NOW()`), not inventory.
+- `POST /api/v1/auth/login`: public, rate-limited login.
+- `GET /api/v1/auth/me`: verified JWT user.
+- `GET /api/v1/auth/managers` and `GET /api/v1/auth/managers/:mobile`: active account required.
+- `POST /api/v1/auth/managers`: active ADMIN account required; rate limited.
+- `PUT /api/v1/auth/managers/:id`: active ADMIN account required.
 
-For a new setup, copy `.env.example` to `.env` and set `DATABASE_URL` to the
-PostgreSQL connection string from your Neon dashboard. Existing `.env` settings
-are preserved. `db.js` uses the existing `pg` driver with TLS certificate and
-hostname verification. The old `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`,
-and `DB_PORT` settings are no longer used. No serverless driver is required.
-Use `npm start` to run without the development watcher.
+See [Login and sessions](LOGIN.md) for manager schema/migration requirements.
+No booking or reverse-geocoding endpoint is currently implemented.
 
-## Endpoints
+## Deploy independently
 
-- `GET /`: server running message.
-- `GET /api/v1/availability/consoles`: currently runs the requested connection
-  test `SELECT NOW() AS current_time`, returned as `{ success, message, data }`.
-  The `data` array contains one object with `current_time`.
-
-The current query needs no tables. This project does not create or modify
-database tables automatically. The root endpoint is a liveness
-response; it does not query the database on every request.
-
-The frontend continues to call `/availability/consoles` using its `/api/v1`
-base URL. Keep the backend on port 5000 for the existing Vite proxy.
-
-CORS currently allows all origins, preserving the existing behavior.
-Both npm and Yarn lockfiles were already present; the commands above use npm.
-The repository's root `.gitignore` currently excludes the entire backend.
+See [Network configuration](../NETWORK_CONFIGURATION.md) for Vercel and
+conventional Node deployment settings. The backend needs its own database/JWT
+environment values and `CORS_ORIGINS` for the deployed frontend. Production does
+not require the frontend directory or the shared local configuration file.

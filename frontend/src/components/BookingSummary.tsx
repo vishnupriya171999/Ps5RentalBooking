@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { formatPrice } from '../data/offers'
 import { validateCustomerDetails, buildCustomerDetails } from '../data/customerValidation'
+import { LOCATION_REVERSE_URL } from '../config/api'
 import '../booking-card.css'
 import '../customer-validation.css'
 
@@ -183,8 +184,7 @@ const BookingSummary = ({ selectedOffer, selectedAddOns, startDate, endDate, del
       setDetails((current) => ({ ...current, address: '', mapsLink, location: { latitude: coords.latitude, longitude: coords.longitude }, addressConfirmed: false }))
       setLocationStatus('Location found. Looking up your address...')
       try {
-        const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
-        const response = await fetch(`${apiBase}/api/location/reverse`, {
+        const response = await fetch(LOCATION_REVERSE_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ latitude: coords.latitude, longitude: coords.longitude }),

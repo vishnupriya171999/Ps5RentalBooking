@@ -1,53 +1,52 @@
 {
   "info": {
     "name": "PS5 Admin API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Optional API requests for manual testing; not used by the application or deployment. Set backendOrigin to your backend origin without a trailing slash or /api/v1. Login with loginMobile/loginPassword for an existing active ADMIN account, copy the response token into adminToken, and supply separate manager fields to create an account. Use Postman environment or local variable values for each deployment; keep real credentials and tokens out of exported files."
   },
   "variable": [
     {
-      "key": "baseUrl",
-      "value": "http://localhost:5000/api/v1"
+      "key": "backendOrigin",
+      "value": "",
+      "description": "Backend origin only: scheme, hostname, and optional port. Use the local address from network.config.json or your deployed HTTPS origin."
     },
     {
-      "key": "adminName",
-      "value": "Admin"
+      "key": "loginMobile",
+      "value": "",
+      "description": "Existing active administrator mobile number."
     },
     {
-      "key": "mobile",
-      "value": ""
+      "key": "loginPassword",
+      "value": "",
+      "description": "Existing administrator password. Set locally; do not export credentials."
     },
     {
-      "key": "password",
-      "value": ""
+      "key": "adminToken",
+      "value": "",
+      "description": "JWT returned by Login. Set locally; do not export tokens."
     },
     {
-      "key": "role",
-      "value": "ADMIN"
+      "key": "managerName",
+      "value": "",
+      "description": "New manager name."
+    },
+    {
+      "key": "managerMobile",
+      "value": "",
+      "description": "New manager mobile number."
+    },
+    {
+      "key": "managerPassword",
+      "value": "",
+      "description": "New manager password. Set locally; do not export credentials."
+    },
+    {
+      "key": "managerRole",
+      "value": "MANAGER",
+      "description": "Role of the new account. Only an existing active administrator may create accounts."
     }
   ],
   "item": [
-    {
-      "name": "Create security manager",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/auth/managers",
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"{{adminName}}\",\n  \"mobile\": \"{{mobile}}\",\n  \"password\": \"{{password}}\",\n  \"role\": \"{{role}}\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        }
-      }
-    },
     {
       "name": "Login",
       "request": {
@@ -58,15 +57,50 @@
             "value": "application/json"
           }
         ],
-        "url": "{{baseUrl}}/auth/login",
+        "url": "{{backendOrigin}}/api/v1/auth/login",
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"password\": \"{{password}}\"\n}",
+          "raw": "{\n  \"mobile\": \"{{loginMobile}}\",\n  \"password\": \"{{loginPassword}}\"\n}",
           "options": {
             "raw": {
               "language": "json"
             }
           }
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Create security manager",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{backendOrigin}}/api/v1/auth/managers",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{managerName}}\",\n  \"mobile\": \"{{managerMobile}}\",\n  \"password\": \"{{managerPassword}}\",\n  \"role\": \"{{managerRole}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{adminToken}}",
+              "type": "string"
+            }
+          ]
         }
       }
     }

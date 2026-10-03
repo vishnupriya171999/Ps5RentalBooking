@@ -2,18 +2,19 @@ import type { Request, Response, NextFunction } from 'express';
 import express from "express";
 import cors from "cors";
 import registerRoutes from "./routes/registerRoutes.js";
+import { API_PREFIX, CORS_ORIGINS } from './config.js';
 
 const app = express();
 
 app.disable("x-powered-by");
-app.use(cors());
+app.use(cors({ origin: CORS_ORIGINS.length ? CORS_ORIGINS : '*' }));
 app.use(express.json({ limit: "100kb" }));
 
 app.get("/", (req, res) => {
   res.json({ success: true, message: "PS5 Rental Backend Running" });
 });
 
-app.use("/api/v1", registerRoutes);
+app.use(API_PREFIX, registerRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
